@@ -1,0 +1,46 @@
+Use Library
+Ćwiczenie 1
+
+1. 	Select title as Title, title_no as 'Title Number'
+	From Title
+
+2. 	Select title as Title
+	From Title
+	where title_no=10
+
+3.	Select (distinct) member_no as 'Member Number', fine_assessed as 'Fine assessed'
+	From loanhist
+	where fine_assessed between 8 and 9
+
+4.	Select title_no as 'Title number', author as Author
+	From Title
+	Where author in ('Charles Dickens', 'Jane Austen')
+
+5.	select title_no as 'Title number', title as Title
+	from title
+	where title like '%adventures%'
+
+6. 	select member_no as 'Member number', fine_assessed as 'Fine assessed',  fine_paid as 'Fine paid'
+	from loanhist
+	where ISNULL(fine_assessed,0)>ISNULL(fine_paid,0)+ISNULL(fine_waived,0)
+
+7. 	select distinct city as City, state as State
+	from adult
+
+Ćwiczenie 2
+
+1. 	select title as Title
+	from title
+	order by Title
+
+2. 	select member_no as 'Member number',isbn as 'International Standard Book Number',fine_assessed as 'Fine assessed', fine_assessed * 2 as 'double fine'
+	from loanhist
+	where ISNULL(fine_assessed,0) > 0
+
+3.	select LOWER(firstname + middleinitial + SUBSTRING(lastname,1,2) ) as email_name
+	from member
+	where lastname = 'Anderson'
+
+4.	select 'The title is: ' + title + ', title number ' + convert(varchar(3),title_no)
+	from title
+
