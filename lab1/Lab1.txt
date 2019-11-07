@@ -1,0 +1,99 @@
+Use Northwind
+
+-- Exercise 1
+
+Select CompanyName, Address
+from Customers
+
+Select LastName, HomePhone
+from Employees
+
+Select ProductName, UnitPrice
+from Products
+
+Select CategoryName, Description
+From Categories
+
+Select CompanyName, HomePage
+From Suppliers
+
+-- Exercise 2
+
+Select CompanyName, Address
+From Customers
+Where City='London'
+
+Select CompanyName, Address
+From Customers
+Where Country in ('France','Spain')
+
+Select ProductName, UnitPrice
+From Products
+Where UnitPrice between 20 and 30
+
+Select ProductName, UnitPrice
+From Products
+Where CategoryID=6
+
+Select ProductName, UnitsinStock
+From Products
+Where SupplierID=4
+
+Select ProductName
+From Products
+Where UnitsinStock=0
+
+-- Exercise 3
+
+Select *
+From Products
+Where QuantityPerUnit like '%bottle%'
+
+Select *
+From Employees
+Where LastName like '[B-L]%'
+
+Select *
+From Employees
+Where LastName like '[BL]%'	
+
+Select CategoryName
+From Categories
+Where Description like '%,%'
+
+Select *
+From Customers
+Where CompanyName like '%Store%'
+
+-- Exercise 4
+
+Select *
+From Products
+Where UnitPrice<10 or UnitPrice>20
+
+Select ProductName, UnitPrice
+From Products
+Where UnitPrice>20 and UnitPrice<30
+
+Select CompanyName, Country
+From Customers
+Where Country in ('Japan','Italy')
+
+Select *
+From Orders
+Where ShippedDate is NULL and ShipCountry='Argentina'
+
+-- Exercise 5
+
+Select CompanyName, Country
+From Customers
+Order by Country,CompanyName
+
+Select *
+From Products
+Order by CategoryID, UnitPrice desc
+
+Select CompanyName,Country
+From Customers
+Where Country in ('UK','Italy')
+Order by Country,CompanyName
