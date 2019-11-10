@@ -1,0 +1,68 @@
+Ćwiczenie nr 1
+
+1. Select OrderID, Sum(UnitPrice*Quantity*(1-Discount)) as TotalPrice
+   From [Order Details]
+   Group by OrderID
+   Order by 2 Desc
+
+2. Select Top 10 OrderID, Sum(UnitPrice*Quantity*(1-Discount)) as TotalPrice
+   From [Order Details]
+   Group by OrderID
+   Order by 2 Desc
+
+3. Select Top 10 with ties OrderID, Sum(UnitPrice*Quantity*(1-Discount)) as TotalPrice
+   From [Order Details]
+   Group by OrderID
+   Order by 2 Desc
+
+Wyniki okazały się identyczne, ponieważ nie było żadnego innego zamówienia o takiej samej wartości
+jak 10 największe zamówienie
+
+Ćwiczenie nr 2
+
+1. Select ProductID, Sum(Quantity) as 'Total Quantity'
+   From [Order Details]
+   Where ProductID < 3
+   Group by ProductID
+
+2. Select ProductID, Sum(Quantity) as 'Total Quantity'
+   From [Order Details]
+   Group by ProductID
+   Order by ProductID
+
+3. Select OrderID, Sum(Quantity*UnitPrice*(1-Discount)) as 'Total Value'
+   From [Order Details]
+   Group by OrderID
+   Having Sum(Quantity) > 250
+   Order by OrderID
+
+Ćwiczenie nr 3
+
+1. Select ProductID, OrderID, Sum(Quantity) as 'Total Quantity'
+   From [Order Details]
+   Group by ProductID, OrderID
+   With Rollup
+   Order by ProductID
+   
+2. Select ProductID, OrderID, Sum(Quantity) as 'Total Quantity'
+   From [Order Details]
+   Where ProductID = 50
+   Group by ProductID, OrderID
+   With Rollup
+   Order by ProductID
+
+3. Wartości NULL powinno się rozumieć jako "wszystko razem", np. gdy ProductID oraz OrderID mają 
+   wartość NULL to w Total Quantity znajduje się liczba wszystkich zamówionych towarów, gdy zaś
+   OrderID ma wartość NULL a ProductID np. 1 to w Total Quantity znajduje się liczba wszystkich
+   zamówionych produktów o identyfikatorze 1.  
+
+4. Select ProductID, Grouping(ProductID) as 'Product Grouping', OrderID, Grouping(OrderID) as 'Order Grouping', Sum(Quantity) as 'Total Quantity'
+   From [Order Details]
+   Group by ProductID, OrderID
+   With Cube
+   Order by ProductID
+
+5. Podsumowania to takie wiersze, które w Grouping otrzymują wartość 1.
+   Podsumowanie według productu to takie wiersze, w których Grouping produktu ma 1 a zamówienia 0
+   Podsumowanie według zamówienia to takie wiersze, w których Grouping produktu ma 0 a zamówienia 1
+   Podsumowanie całości  to taki wiersz, w którym Grouping produktu i zamówienia ma 1
