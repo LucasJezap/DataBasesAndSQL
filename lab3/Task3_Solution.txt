@@ -1,0 +1,52 @@
+1.
+Use Northwind
+Select ProductName, UnitPrice, CompanyName, Address, City, Region, Country
+From Products as P INNER JOIN Suppliers as S
+On P.SupplierID = S.SupplierID and UnitPrice between 20 and 30
+INNER JOIN Categories as C
+On C.CategoryID = P.CategoryID and CategoryName='Meat/Poultry'
+
+2.
+Use Northwind
+Select ProductName, UnitPrice, CompanyName
+From Products as P INNER JOIN Suppliers as S
+On P.SupplierID = S.SupplierID
+INNER JOIN Categories as C
+On C.CategoryID = P.CategoryID and CategoryName = 'Confections'
+
+3.
+Select Distinct C.CompanyName, C.Phone
+From Customers as C INNER JOIN Orders as O
+On C.CustomerID = O.CustomerID and year(shippedDate)='1997'
+INNER JOIN Shippers as S
+On O.ShipVia = S.ShipperID and S.CompanyName='United Package'
+
+4.
+Select Distinct C.CompanyName, C.Phone
+From Customers as C INNER JOIN Orders as O
+On C.CustomerID = O.CustomerID
+INNER JOIN [Order Details] as OD
+On O.OrderID = OD.OrderID
+INNER JOIN Products as P
+On OD.ProductID = P.ProductID
+INNER JOIN Categories as CA
+On P.CategoryID = CA.CategoryID and CategoryName='Confections'
+
+5.
+Use Library
+Select firstname, lastname, birth_date, street, city, state
+From member as M INNER JOIN Juvenile as J
+On M.member_no = J.member_no
+INNER JOIN Adult as A
+On J.adult_member_no = A.member_no
+
+6.
+Use Library
+Select M1.firstname, M1.lastname, M2.firstname as 'adult firstname',
+M2.lastname as 'adult lastname', birth_date, street, city, state
+From member as M1 INNER JOIN Juvenile as J
+On M1.member_no = J.member_no
+INNER JOIN Adult as A
+On J.adult_member_no = A.member_no
+INNER JOIN member as M2
+On M2.member_no = A.member_no

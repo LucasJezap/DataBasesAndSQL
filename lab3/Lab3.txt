@@ -1,0 +1,99 @@
+Use joindb
+
+Select *
+From Buyers
+
+Select *
+From Sales
+
+Select *
+From Produce
+
+Select *
+From Sales as S, Buyers as B
+Where S.buyer_id = B.buyer_id
+
+Select buyer_name, sales.buyer_id, qty
+From buyers INNER JOIN sales
+On buyers.buyer_id = sales.buyer_id
+
+Select buyer_name, sales.buyer_id, qty
+From buyers LEFT OUTER JOIN sales
+On buyers.buyer_id = sales.buyer_id
+
+Select buyer_name, sales.buyer_id, qty
+From buyers RIGHT OUTER JOIN sales
+On buyers.buyer_id = sales.buyer_id
+
+Use Northwind
+Select companyname, customers.customerid, orderdate
+From customers LEFT OUTER JOIN orders
+On customers.customerid = orders.customerid
+
+Use Library
+
+Select firstname, lastname, birth_date
+From member INNER JOIN juvenile
+On member.member_no = juvenile.member_no
+
+Select distinct title
+From title INNER JOIN loan
+On title.title_no = loan.title_no
+
+Select in_date, due_date, DATEDIFF(DAY, due_date, in_date) as exceeded_days, fine_assessed
+From title INNER JOIN loanhist
+On title.title_no = loanhist.title_no
+Where due_date<in_date and title='Tao Teh King'
+
+Select isbn
+from member INNER JOIN reservation
+On member.member_no = reservation.member_no
+Where firstName = 'Stephen' and middleinitial = 'A' and lastname = 'Graff'
+
+-- alternative
+
+Select isbn
+from member INNER JOIN reservation
+On member.member_no = reservation.member_no
+Where firstName+' '+middleinitial+'. '+lastname='Stephen A. Graff'
+
+Select lastname
+From member INNER JOIN adult
+On member.member_no = adult.member_no
+Where lastname like '%Anderson%'
+
+Use Northwind
+Select ProductName, UnitPrice, Address
+From Products INNER JOIN Suppliers
+On Products.supplierID = Suppliers.supplierID
+Where unitprice between 20 and 30
+
+Select ProductName, UnitsinStock
+From Products INNER JOIN Suppliers
+On CompanyName = 'Tokyo Traders'
+
+Select CompanyName, Address
+From Customers LEFT OUTER JOIN Orders
+On customers.customerid=orders.customerid and year(orderdate)='1997'
+Where orderdate is NULL
+
+Select CompanyName, Phone
+From Suppliers INNER JOIN Products
+On suppliers.supplierID = products.supplierid
+Where UnitsinStock=0
+
+Use joindb
+Select buyer_name, qty
+From buyers CROSS JOIN sales
+
+Select buyer_name, prod_name, qty
+From buyers INNER JOIN sales
+On buyers.buyer_id=sales.buyer_id
+INNER JOIN produce
+On sales.prod_id = produce.prod_id
+
+Select buyer_name, prod_name, qty
+From buyers LEFT OUTER JOIN sales
+On buyers.buyer_id=sales.buyer_id
+LEFT OUTER JOIN produce
+On sales.prod_id = produce.prod_id
