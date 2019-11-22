@@ -1,0 +1,125 @@
+Use Library
+Select M1.firstname, M1.lastname, M2.firstname as 'adult firstname',
+M2.lastname as 'adult lastname', birth_date, street, city, state
+From member as M1 INNER JOIN Juvenile as J
+On M1.member_no = J.member_no
+INNER JOIN Adult as A
+On J.adult_member_no = A.member_no
+INNER JOIN member as M2
+On M2.member_no = A.member_no
+
+Use Northwind
+
+-- Exercise 1
+Use Northwind
+Select e1.EmployeeID as 'Employee' , e2.EmployeeID as 'His Boss'
+From Employees as e1 INNER JOIN Employees as e2
+On e1.ReportsTo=e2.EmployeeID
+
+-- Exercise 2
+Use Northwind
+Select e1.EmployeeID as 'Boss' , e2.EmployeeID as 'Employee'
+From Employees as e1 LEFT JOIN Employees as e2
+On e1.EmployeeID=e2.ReportsTo 
+Where e2.employeeID is NULL            -- change
+
+Use Northwind
+Select (firstname+''+lastname) as name, city ,postalcode, 'prac'
+From employees
+union
+Select companyname, city, postalcode, 'klient'
+From Customers
+Order by 4
+
+Use Library
+Select count(*) 
+From juvenile INNER JOIN adult 
+ON juvenile.adult_member_no=adult.member_no 
+Where adult.member_no=1
+
+-- Exercise 3
+Use Library
+Select m.firstname, m.lastname, count(*) as 'kid count', 'ARIZONA BABE'
+from adult as a join member as m
+on a.member_no = m.member_no
+join juvenile as j
+on m.member_no=j.adult_member_no
+where a.state = 'AZ'
+group by m.member_no, m.firstname, m.lastname
+having count(*)>2
+union
+Select m.firstname, m.lastname, count(*) as 'kid count', 'CALIFORNIA BABE'
+from adult as a join member as m
+on a.member_no = m.member_no
+join juvenile as j
+on m.member_no=j.adult_member_no
+where a.state = 'CA'
+group by m.member_no, m.firstname, m.lastname
+having count(*)>3
+
+-- Exercise 4a
+Use Northwind
+Select C.CategoryName, sum(quantity) as 'Total sum'
+From Categories as C JOIN Products as P
+On C.CategoryID = P.CategoryID
+JOIN [Order Details] as OD
+ON P.ProductID=OD.ProductID
+GROUP BY C.CategoryName
+
+-- Exercise 4b
+Use Northwind
+Select C.CategoryName, Cu.CompanyName, sum(quantity) as 'Total sum'
+From Categories as C JOIN Products as P
+On C.CategoryID = P.CategoryID
+JOIN [Order Details] as OD
+ON P.ProductID=OD.ProductID
+JOIN Orders as O
+ON OD.OrderID=O.OrderID
+JOIN Customers as Cu
+ON O.CustomerID=Cu.CustomerID
+Group By C.CategoryName, Cu.CompanyName
+
+-- Exercise 5
+Use Northwind
+Select C.CategoryName, Cu.CompanyName, sum(quantity) as 'Total sum'
+From Categories as C JOIN Products as P
+On C.CategoryID = P.CategoryID
+JOIN [Order Details] as OD
+ON P.ProductID=OD.ProductID
+JOIN Orders as O
+ON OD.OrderID=O.OrderID
+JOIN Customers as Cu
+ON O.CustomerID=Cu.CustomerID
+Group By C.CategoryName, Cu.CompanyName
+Having sum(quantity)>250
+
+-- Exercise 6
+Use Northwind
+Select Cu.CompanyName, O.OrderID, ISNULL(sum((1-Discount)*Quantity*UnitPrice),0) as 'Total paid'
+From Customers as Cu LEFT JOIN Orders as O
+On Cu.CustomerID=O.CustomerID
+LEFT JOIN [Order Details] as OD
+On O.OrderID=OD.OrderID
+Group by  O.OrderID,CompanyName
+
+-- Exercise 7
+Use Library
+Select firstname, lastname
+From member as m LEFT JOIN loanhist as lh
+on m.member_no=lh.member_no
+LEFT JOIN loan as l
+on m.member_no=l.member_no
+Where lh.title_no is NULL and l.title_no is NULL
+
+-- alternatywnie 
+
+Use Library
+Select m.member_no, m.firstname, m.lastname
+From member as m LEFT OUTER JOIN loanhist as lh
+On lh.member_no = m.member_no
+where lh.title_no is NULL
+Intersect
+Select m.member_no, m.firstname, m.lastname
+From member as m LEFT OUTER JOIN loan as l
+On l.member_no = m.member_no
+where l.title_no is NULL
