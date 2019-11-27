@@ -1,0 +1,145 @@
+
+-- Exercise 1 Task 1
+Use Northwind
+Select OD.OrderID, sum(Quantity) as 'Quantity', CompanyName
+From [Order Details] as OD 
+JOIN Orders as O On OD.OrderID=O.OrderID
+JOIN Customers as C On C.CustomerID=O.CustomerID
+Group by OD.OrderID, CompanyName
+
+-- Exercise 1 Task 2
+Use Northwind
+Select OD.OrderID, sum(Quantity) as 'Quantity', CompanyName
+From [Order Details] as OD 
+JOIN Orders as O On OD.OrderID=O.OrderID
+JOIN Customers as C On C.CustomerID=O.CustomerID
+Group by OD.OrderID, CompanyName
+Having sum(Quantity)>250
+
+-- Exercise 1 Task 3
+Use Northwind
+Select OD.OrderID, sum((1-Discount)*UnitPrice*Quantity) as 'Sum', sum(Quantity) as 'Quantity', CompanyName
+From [Order Details] as OD 
+JOIN Orders as O On OD.OrderID=O.OrderID
+JOIN Customers as C On C.CustomerID=O.CustomerID
+Group by OD.OrderID, CompanyName
+Order by 1
+
+-- Exercise 1 Task 4
+Use Northwind
+Select OD.OrderID, sum((1-Discount)*UnitPrice*Quantity) as 'Sum', sum(Quantity) as 'Quantity', CompanyName
+From [Order Details] as OD 
+JOIN Orders as O On OD.OrderID=O.OrderID
+JOIN Customers as C On C.CustomerID=O.CustomerID
+Group by OD.OrderID, CompanyName
+Having sum(Quantity)>250
+
+-- Exercise 1 Task 5
+Use Northwind
+Select OD.OrderID, sum((1-Discount)*UnitPrice*Quantity) as 'Sum', sum(Quantity) as 'Quantity', CompanyName, (FirstName+' '+LastName) as 'Employee'
+From [Order Details] as OD 
+JOIN Orders as O On OD.OrderID=O.OrderID
+JOIN Customers as C On C.CustomerID=O.CustomerID
+JOIN Employees as E on O.EmployeeID=E.EmployeeID
+Group by OD.OrderID, CompanyName, FirstName, LastName
+Having sum(Quantity)>250
+
+-- Exercise 2 Task 1
+Use Northwind	
+Select CategoryName, sum(Quantity) as 'Quantity'
+From Categories as C
+JOIN Products as P on C.CategoryID=P.CategoryID
+JOIN [Order Details] as OD on OD.ProductID=P.ProductID
+Group by CategoryName
+
+-- Exercise 2 Task 2
+Use Northwind
+Select CategoryName, sum(Quantity) as 'Quantity', sum((1-Discount)*OD.UnitPrice*Quantity) as 'Sum'
+From Categories as C
+JOIN Products as P on C.CategoryID=P.CategoryID
+JOIN [Order Details] as OD on OD.ProductID=P.ProductID
+Group by CategoryName
+
+-- Exercise 2 Task 3a
+Use Northwind
+Select CategoryName, sum(Quantity) as 'Quantity', sum((1-Discount)*OD.UnitPrice*Quantity) as 'Sum'
+From Categories as C
+JOIN Products as P on C.CategoryID=P.CategoryID
+JOIN [Order Details] as OD on OD.ProductID=P.ProductID
+Group by CategoryName
+Order by 3
+
+-- Exercise 2 Task 3b
+Use Northwind
+Select CategoryName, sum(Quantity) as 'Quantity', sum((1-Discount)*OD.UnitPrice*Quantity) as 'Sum'
+From Categories as C
+JOIN Products as P on C.CategoryID=P.CategoryID
+JOIN [Order Details] as OD on OD.ProductID=P.ProductID
+Group by CategoryName
+Order by 2
+
+-- Exercise 3 Task 1
+Use Northwind
+Select S.CompanyName, sum(Quantity) as 'Quantity'
+From Shippers as S
+JOIN Orders as O on S.ShipperID=O.ShipVia
+JOIN [Order Details] as OD on O.OrderID=OD.OrderID
+Where year(ISNULL(ShippedDate,0))='1997'
+Group by S.CompanyName
+
+-- Exercise 3 Task 2
+Use Northwind
+Select TOP 1 S.CompanyName, sum(Quantity) as 'Quantity'
+From Shippers as S
+JOIN Orders as O on S.ShipperID=O.ShipVia
+JOIN [Order Details] as OD on O.OrderID=OD.OrderID
+Where year(ISNULL(ShippedDate,0))='1997'
+Group by S.CompanyName
+Order by 2 DESC
+
+-- Exercise 3 Task 3
+Use Northwind
+Select TOP 1 firstname as 'First Name', lastname as 'Last Name', sum(Quantity) as 'Quantity'
+From Employees as E
+JOIN Orders as O on E.EmployeeID=O.EmployeeID
+JOIN [Order Details] as OD on O.OrderID=OD.OrderID
+Where year(ISNULL(ShippedDate,0))='1997'
+Group by firstname, lastname
+Order by 3 DESC
+
+-- Exercise 4 Task 1
+Use Northwind
+Select firstname as 'First Name', lastname as 'Last Name', sum((1-Discount)*UnitPrice*Quantity) as 'Sum'
+From Employees as E
+JOIN Orders as O on E.EmployeeID=O.EmployeeID
+JOIN [Order Details] as OD on O.OrderID=OD.OrderID
+Group by firstname, lastname
+
+-- Exercise 4 Task 2
+Use Northwind
+Select TOP 1 firstname as 'First Name', lastname as 'Last Name', sum((1-Discount)*UnitPrice*Quantity) as 'Sum'
+From Employees as E
+JOIN Orders as O on E.EmployeeID=O.EmployeeID
+JOIN [Order Details] as OD on O.OrderID=OD.OrderID
+Where year(ISNULL(ShippedDate,0))='1997'
+Group by firstname, lastname
+Order by 3 DESC
+
+-- Exercise 4 Task 3a
+Use Northwind
+Select A.firstname as 'First Name', A.lastname as 'Last Name', sum((1-Discount)*UnitPrice*Quantity) as 'Sum'
+From Employees A
+JOIN Employees B on A.EmployeeID=B.ReportsTo
+JOIN Orders as O on A.EmployeeID=O.EmployeeID
+JOIN [Order Details] as OD on O.OrderID=OD.OrderID
+Group by A.firstname, A.lastname
+
+-- Exercise 4 Task 3b
+Use Northwind
+Select A.firstname as 'First Name', A.lastname as 'Last Name', sum((1-Discount)*UnitPrice*Quantity) as 'Sum'
+From Employees A
+LEFT JOIN Employees B on A.EmployeeID=B.ReportsTo
+LEFT JOIN Orders as O on A.EmployeeID=O.EmployeeID
+LEFT JOIN [Order Details] as OD on O.OrderID=OD.OrderID
+where B.reportsTo is NULL
+Group by A.firstname, A.lastname
