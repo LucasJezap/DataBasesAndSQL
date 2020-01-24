@@ -4,3 +4,4 @@ Here's the code from my Databases basics classes that took place on AGH Universi
 <a href="https://github.com/LucasJezap/DataBasesAndSQL/tree/master/lab2"> Laboratories 2  
 <a href="https://github.com/LucasJezap/DataBasesAndSQL/tree/master/lab3"> Laboratories 3  
 <a href="https://github.com/LucasJezap/DataBasesAndSQL/tree/master/lab4"> Laboratories 4  
+<a href="https://github.com/LucasJezap/DataBasesAndSQL/tree/master/ConferencesProject"> Conferences Project  
